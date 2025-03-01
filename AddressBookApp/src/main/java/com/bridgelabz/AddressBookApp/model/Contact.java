@@ -41,4 +41,8 @@ public class Contact {
 
     public void setPhoneNumber(String phoneNumber) {
     }
+
+    public Object getId() {
+        return id;
+    }
 }

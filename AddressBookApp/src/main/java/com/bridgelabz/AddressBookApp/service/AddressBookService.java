@@ -1,4 +1,5 @@
 package com.bridgelabz.AddressBookApp.service;
+import com.bridgelabz.AddressBookApp.dto.AddressBookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -26,13 +27,15 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
-    public Contact addContact(Contact contact) {
+    public Contact addContact(AddressBookDTO contactDTO) {
+        Contact contact = new Contact(contactDTO);
         return addressBookRepository.save(contact);
     }
 
     @Override
-    public Contact updateContact(Long id, Contact contact) {
+    public Contact updateContact(Long id, AddressBookDTO contactDTO) {
         if (addressBookRepository.existsById(id)) {
+            Contact contact = new Contact(contactDTO);
             contact.setId(id);
             return addressBookRepository.save(contact);
         }

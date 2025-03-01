@@ -3,15 +3,13 @@ package com.bridgelabz.AddressBookApp.model;
 
 
 
+import com.bridgelabz.AddressBookApp.dto.AddressBookDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 @Entity
 @Table(name = "contacts")
-@Data  // This generates getters & setters
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Contact {
@@ -23,4 +21,14 @@ public class Contact {
     private String name;
     private String address;
     private String phoneNumber;
+
+    public Contact(AddressBookDTO addressBookDTO) {
+        this.name = addressBookDTO.getName();
+        this.address = addressBookDTO.getAddress();
+        this.phoneNumber = addressBookDTO.getPhoneNumber();
+    }
+
+    public void setId(Long id) {
+        
+    }
 }

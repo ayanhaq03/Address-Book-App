@@ -1,6 +1,7 @@
 package com.bridgelabz.AddressBookApp.controller;
 
 
+import com.bridgelabz.AddressBookApp.dto.AddressBookDTO;
 import com.bridgelabz.AddressBookApp.model.Contact;
 import com.bridgelabz.AddressBookApp.service.IAddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/addressbook")
 public class AddressBookController {
@@ -17,33 +17,28 @@ public class AddressBookController {
     @Autowired
     private IAddressBookService addressBookService;
 
-    // Get all contacts
     @GetMapping("/contacts")
     public ResponseEntity<List<Contact>> getAllContacts() {
         return ResponseEntity.ok(addressBookService.getAllContacts());
     }
 
-    // Get contact by ID
     @GetMapping("/contacts/{id}")
     public ResponseEntity<Contact> getContactById(@PathVariable Long id) {
         Optional<Contact> contact = addressBookService.getContactById(id);
         return contact.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Add a new contact
     @PostMapping("/contacts")
-    public ResponseEntity<Contact> addContact(@RequestBody Contact contact) {
-        return ResponseEntity.ok(addressBookService.addContact(contact));
+    public ResponseEntity<Contact> addContact(@RequestBody AddressBookDTO contactDTO) {
+        return ResponseEntity.ok(addressBookService.addContact(contactDTO));
     }
 
-    // Update contact by ID
     @PutMapping("/contacts/{id}")
-    public ResponseEntity<Contact> updateContact(@PathVariable Long id, @RequestBody Contact contact) {
-        Contact updatedContact = addressBookService.updateContact(id, contact);
+    public ResponseEntity<Contact> updateContact(@PathVariable Long id, @RequestBody AddressBookDTO contactDTO) {
+        Contact updatedContact = addressBookService.updateContact(id, contactDTO);
         return updatedContact != null ? ResponseEntity.ok(updatedContact) : ResponseEntity.notFound().build();
     }
 
-    // Delete contact by ID
     @DeleteMapping("/contacts/{id}")
     public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
         addressBookService.deleteContact(id);

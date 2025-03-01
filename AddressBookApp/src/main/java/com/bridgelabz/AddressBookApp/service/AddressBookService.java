@@ -1,5 +1,6 @@
 package com.bridgelabz.AddressBookApp.service;
 import com.bridgelabz.AddressBookApp.dto.AddressBookDTO;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import java.util.Optional;
-
+@Data
 @Service
 public class AddressBookService implements IAddressBookService {
 
@@ -28,15 +29,19 @@ public class AddressBookService implements IAddressBookService {
 
     @Override
     public Contact addContact(AddressBookDTO contactDTO) {
-        Contact contact = new Contact(contactDTO);
+        Contact contact = new Contact(contactDTO);  // Model creation in Service Layer
         return addressBookRepository.save(contact);
     }
 
     @Override
     public Contact updateContact(Long id, AddressBookDTO contactDTO) {
-        if (addressBookRepository.existsById(id)) {
-            Contact contact = new Contact(contactDTO);
-            contact.setId(id);
+        Optional<Contact> existingContact = addressBookRepository.findById(id);
+        if (existingContact.isPresent()) {
+            Contact contact = existingContact.get();
+            contact.setName(contactDTO.getName());
+            contact.setAddress(contactDTO.getAddress());
+
+            contact.setPhoneNumber(contactDTO.getPhoneNumber());
             return addressBookRepository.save(contact);
         }
         return null;

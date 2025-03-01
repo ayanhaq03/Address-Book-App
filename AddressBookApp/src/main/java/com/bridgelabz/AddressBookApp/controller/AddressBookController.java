@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/addressbook")
 public class AddressBookController {
 
     @Autowired
-    private IAddressBookService addressBookService;
+    private IAddressBookService addressBookService;  // Injected Service Layer
 
     @GetMapping("/contacts")
     public ResponseEntity<List<Contact>> getAllContacts() {

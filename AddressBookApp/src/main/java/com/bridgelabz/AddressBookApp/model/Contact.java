@@ -31,4 +31,14 @@ public class Contact {
     public void setId(Long id) {
         
     }
+
+
+    public void setName(String name) {
+    }
+
+    public void setAddress(String address) {
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+    }
 }
